@@ -1,12 +1,39 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ExternalLink, MapPin, Send } from "lucide-react";
+
+const allowedDomains = [
+  "gmail.com", "googlemail.com",
+  "outlook.com", "hotmail.com", "live.com", "msn.com",
+  "yahoo.com", "yahoo.co.in", "yahoo.co.uk",
+  "icloud.com", "me.com", "mac.com",
+  "protonmail.com", "proton.me",
+  "zoho.com", "zohomail.com",
+  "aol.com",
+  "rediffmail.com",
+  "fastmail.com",
+  "hey.com",
+  "tutanota.com", "tutamail.com",
+  "mail.com", "email.com",
+  "gmx.com", "gmx.de",
+  "yandex.com", "yandex.ru",
+  "mail.ru",
+  "windowslive.com",
+  "live.co.uk", "live.in",
+  "outlook.in", "hotmail.co.uk",
+];
+
+function isAllowedEmail(email: string): boolean {
+  const domain = email.split("@")[1]?.toLowerCase();
+  return allowedDomains.includes(domain);
+}
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [emailError, setEmailError] = useState("");
 
   return (
     <section id="contact" className="py-24 px-6 relative" ref={ref}>
@@ -102,6 +129,13 @@ export default function Contact() {
                 const name = (form.elements.namedItem("name") as HTMLInputElement).value;
                 const email = (form.elements.namedItem("email") as HTMLInputElement).value;
                 const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+                if (!isAllowedEmail(email)) {
+                  setEmailError("Please use a valid email (Gmail, Outlook, Yahoo, Apple, etc.)");
+                  return;
+                }
+                setEmailError("");
+
                 const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}`;
                 window.location.href = `mailto:itsrinivasbsc@gmail.com?subject=Portfolio Contact&body=${body}`;
               }}
@@ -129,6 +163,9 @@ export default function Contact() {
                   className="w-full px-4 py-3 bg-[#111827] border border-[#1f2937] rounded-lg text-[#ededed] text-sm placeholder:text-[#6b7280]/50 focus:outline-none focus:border-[#00d4ff]/50 transition-colors"
                   required
                 />
+                {emailError && (
+                  <p className="mt-1 text-xs text-[#ef4444]">{emailError}</p>
+                )}
               </div>
               <div>
                 <label className="block text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)] mb-2">
