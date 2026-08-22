@@ -107,73 +107,71 @@ export default function Projects() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" className="py-24 px-6 relative" ref={ref}>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,#00d4ff08_0%,transparent_50%)]" />
+    <section id="projects" className="py-16 sm:py-24 px-4 sm:px-6 relative" ref={ref}>
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center gap-3 mb-12">
-            <span className="font-[family-name:var(--font-geist-mono)] text-[#22c55e] text-sm">
+          <div className="flex items-center gap-3 mb-10 sm:mb-12">
+            <span className="font-[family-name:var(--font-geist-mono)] text-green text-sm">
               03.
             </span>
-            <h2 className="text-3xl font-bold text-[#ededed]">Projects</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-[#22c55e]/30 to-transparent" />
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Projects</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-green/30 to-transparent" />
           </div>
         </motion.div>
 
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.15 }}
-              className="bg-[#111827] rounded-xl border border-[#1f2937] overflow-hidden hover:border-opacity-50 transition-all group"
+              className="bg-surface rounded-xl border border-card-border overflow-hidden hover:border-opacity-50 transition-all group"
               style={{ borderColor: `${project.color}15` }}
             >
-              <div className="p-8">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center gap-4">
+              <div className="p-5 sm:p-8">
+                <div className="flex items-start justify-between mb-4 sm:mb-6">
+                  <div className="flex items-center gap-3 sm:gap-4">
                     <div
-                      className="w-12 h-12 rounded-lg flex items-center justify-center"
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center"
                       style={{ backgroundColor: `${project.color}15` }}
                     >
                       <project.icon
-                        className="w-6 h-6"
+                        className="w-5 h-5 sm:w-6 sm:h-6"
                         style={{ color: project.color }}
                       />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[#ededed]">
+                      <h3 className="text-lg sm:text-xl font-bold text-foreground">
                         {project.title}
                       </h3>
                       <p
-                        className="text-sm font-[family-name:var(--font-geist-mono)]"
+                        className="text-xs sm:text-sm font-[family-name:var(--font-geist-mono)]"
                         style={{ color: project.color }}
                       >
                         {project.subtitle}
                       </p>
                     </div>
                   </div>
-                  <span className="text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)] bg-[#1f2937] px-3 py-1 rounded-full hidden md:block">
+                  <span className="text-xs text-muted font-[family-name:var(--font-geist-mono)] bg-surface-light/50 px-3 py-1 rounded-full hidden sm:block">
                     {project.role}
                   </span>
                 </div>
 
-                <p className="text-[#6b7280] leading-relaxed mb-6">
+                <p className="text-muted leading-relaxed mb-5 sm:mb-6 text-sm sm:text-base">
                   {project.description}
                 </p>
 
-                {/* Flow Diagram */}
-                <div className="mb-6 p-4 bg-[#0a0a0a] rounded-lg border border-[#1f2937]">
-                  <div className="flex items-center justify-center gap-2 flex-wrap">
+                <div className="mb-5 sm:mb-6 p-3 sm:p-4 bg-background rounded-lg border border-card-border">
+                  <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap">
                     {project.flow.map((step, stepIndex) => (
-                      <div key={stepIndex} className="flex items-center gap-2">
+                      <div key={stepIndex} className="flex items-center gap-1.5 sm:gap-2">
                         <span
-                          className="px-3 py-1.5 rounded text-xs font-[family-name:var(--font-geist-mono)] font-medium"
+                          className="px-2 sm:px-3 py-1 sm:py-1.5 rounded text-[10px] sm:text-xs font-[family-name:var(--font-geist-mono)] font-medium"
                           style={{
                             backgroundColor: `${step.color}15`,
                             color: step.color,
@@ -183,18 +181,18 @@ export default function Projects() {
                           {step.label}
                         </span>
                         {stepIndex < project.flow.length - 1 && (
-                          <ArrowRight className="w-4 h-4 text-[#6b7280] flex-shrink-0" />
+                          <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-muted flex-shrink-0" />
                         )}
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-6">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-1 rounded text-xs font-[family-name:var(--font-geist-mono)] bg-[#1f2937] text-[#6b7280]"
+                      className="px-2 py-1 rounded text-xs font-[family-name:var(--font-geist-mono)] bg-surface-light/50 text-muted"
                     >
                       {tech}
                     </span>
@@ -205,7 +203,7 @@ export default function Projects() {
                   {project.features.map((feature, fi) => (
                     <li
                       key={fi}
-                      className="flex items-start gap-2 text-sm text-[#6b7280]"
+                      className="flex items-start gap-2 text-xs sm:text-sm text-muted"
                     >
                       <span style={{ color: project.color }} className="mt-0.5">
                         ▸

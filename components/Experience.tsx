@@ -56,53 +56,53 @@ export default function Experience() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className="py-24 px-6 relative" ref={ref}>
+    <section id="experience" className="py-16 sm:py-24 px-4 sm:px-6 relative" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center gap-3 mb-12">
-            <span className="font-[family-name:var(--font-geist-mono)] text-[#22c55e] text-sm">
+          <div className="flex items-center gap-3 mb-10 sm:mb-12">
+            <span className="font-[family-name:var(--font-geist-mono)] text-green text-sm">
               04.
             </span>
-            <h2 className="text-3xl font-bold text-[#ededed]">Experience</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-[#22c55e]/30 to-transparent" />
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Experience</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-green/30 to-transparent" />
           </div>
         </motion.div>
 
         <div className="relative">
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[#00d4ff] via-[#22c55e] to-[#a855f7] hidden md:block" />
+          <div className="absolute left-5 sm:left-6 top-0 bottom-0 w-px bg-gradient-to-b from-accent via-green to-purple hidden md:block" />
 
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {experiences.map((exp, index) => (
               <motion.div
                 key={exp.company}
                 initial={{ opacity: 0, x: -30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.2 + index * 0.2 }}
-                className="relative md:pl-16"
+                className="relative md:pl-14 lg:pl-16"
               >
                 <div
-                  className="hidden md:flex absolute left-4 top-6 w-5 h-5 rounded-full border-2 items-center justify-center"
+                  className="hidden md:flex absolute left-3 sm:left-4 top-5 sm:top-6 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 items-center justify-center"
                   style={{
                     borderColor: exp.color,
                     backgroundColor: exp.current ? exp.color : "transparent",
                   }}
                 >
                   {exp.current && (
-                    <div className="w-2 h-2 bg-[#0a0a0a] rounded-full" />
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-background rounded-full" />
                   )}
                 </div>
 
                 <div
-                  className="bg-[#111827] rounded-lg border border-[#1f2937] p-6 hover:border-opacity-50 transition-all"
+                  className="bg-surface rounded-lg border border-card-border p-5 sm:p-6 hover:border-opacity-50 transition-all"
                   style={{
-                    borderColor: exp.current ? `${exp.color}30` : "#1f2937",
+                    borderColor: exp.current ? `${exp.color}30` : undefined,
                   }}
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-2">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <Briefcase
@@ -110,23 +110,23 @@ export default function Experience() {
                           style={{ color: exp.color }}
                         />
                         <span
-                          className="text-sm font-[family-name:var(--font-geist-mono)]"
+                          className="text-xs sm:text-sm font-[family-name:var(--font-geist-mono)]"
                           style={{ color: exp.color }}
                         >
                           {exp.period}
                         </span>
                         {exp.current && (
-                          <span className="px-2 py-0.5 rounded-full text-xs bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20">
+                          <span className="px-2 py-0.5 rounded-full text-xs bg-green/10 text-green border border-green/20">
                             Current
                           </span>
                         )}
                       </div>
-                      <h3 className="text-lg font-bold text-[#ededed]">
+                      <h3 className="text-base sm:text-lg font-bold text-foreground">
                         {exp.company}
                       </h3>
-                      <p className="text-sm text-[#6b7280]">{exp.role}</p>
+                      <p className="text-xs sm:text-sm text-muted">{exp.role}</p>
                     </div>
-                    <span className="text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)] mt-2 md:mt-0">
+                    <span className="text-xs text-muted font-[family-name:var(--font-geist-mono)]">
                       {exp.location}
                     </span>
                   </div>
@@ -135,10 +135,10 @@ export default function Experience() {
                     {exp.highlights.map((highlight, hi) => (
                       <li
                         key={hi}
-                        className="flex items-start gap-2 text-sm text-[#6b7280]"
+                        className="flex items-start gap-2 text-xs sm:text-sm text-muted"
                       >
                         <ChevronRight
-                          className="w-4 h-4 mt-0.5 flex-shrink-0"
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 mt-0.5 flex-shrink-0"
                           style={{ color: exp.color }}
                         />
                         {highlight}

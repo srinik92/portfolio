@@ -36,81 +36,80 @@ export default function Contact() {
   const [emailError, setEmailError] = useState("");
 
   return (
-    <section id="contact" className="py-24 px-6 relative" ref={ref}>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,#22c55e08_0%,transparent_50%)]" />
+    <section id="contact" className="py-16 sm:py-24 px-4 sm:px-6 relative" ref={ref}>
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center gap-3 mb-12">
-            <span className="font-[family-name:var(--font-geist-mono)] text-[#22c55e] text-sm">
+          <div className="flex items-center gap-3 mb-10 sm:mb-12">
+            <span className="font-[family-name:var(--font-geist-mono)] text-green text-sm">
               06.
             </span>
-            <h2 className="text-3xl font-bold text-[#ededed]">Get In Touch</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-[#22c55e]/30 to-transparent" />
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Get In Touch</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-green/30 to-transparent" />
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-6"
           >
-            <p className="text-[#6b7280] leading-relaxed">
+            <p className="text-muted leading-relaxed text-sm sm:text-base">
               I&apos;m always open to discussing new projects, creative ideas, or
               opportunities to be part of something amazing. Let&apos;s connect!
             </p>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <a
                 href="https://linkedin.com/in/srinivas-k-77815496"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-[#6b7280] hover:text-[#00d4ff] transition-colors group"
+                className="flex items-center gap-3 text-muted hover:text-accent transition-colors group"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#111827] border border-[#1f2937] flex items-center justify-center group-hover:border-[#00d4ff]/30 transition-all">
+                <div className="w-10 h-10 rounded-lg bg-surface border border-card-border flex items-center justify-center group-hover:border-accent/30 transition-all">
                   <ExternalLink className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)]">
+                  <p className="text-xs text-muted font-[family-name:var(--font-geist-mono)]">
                     LinkedIn
                   </p>
-                  <p className="text-sm text-[#ededed]">Srinivas K</p>
+                  <p className="text-sm text-foreground">Srinivas K</p>
                 </div>
               </a>
 
-              <div className="flex items-center gap-3 text-[#6b7280]">
-                <div className="w-10 h-10 rounded-lg bg-[#111827] border border-[#1f2937] flex items-center justify-center">
+              <div className="flex items-center gap-3 text-muted">
+                <div className="w-10 h-10 rounded-lg bg-surface border border-card-border flex items-center justify-center">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)]">
+                  <p className="text-xs text-muted font-[family-name:var(--font-geist-mono)]">
                     Location
                   </p>
-                  <p className="text-sm text-[#ededed]">Bengaluru, India</p>
+                  <p className="text-sm text-foreground">Bengaluru, India</p>
                 </div>
               </div>
             </div>
 
             <div className="pt-4">
-              <div className="font-[family-name:var(--font-geist-mono)] text-sm text-[#6b7280] bg-[#111827] p-4 rounded-lg border border-[#1f2937]">
+              <div className="font-[family-name:var(--font-geist-mono)] text-sm text-muted bg-surface p-4 rounded-lg border border-card-border">
                 <p>
-                  <span className="text-[#22c55e]">status</span>:{" "}
-                  <span className="text-[#22c55e]">&quot;open_to_work&quot;</span>,
+                  <span className="text-green">status</span>:{" "}
+                  <span className="text-green">&quot;open_to_work&quot;</span>,
                 </p>
                 <p>
-                  <span className="text-[#22c55e]">interests</span>: [
-                  <span className="text-[#00d4ff]">&quot;networking&quot;</span>,{" "}
-                  <span className="text-[#00d4ff]">&quot;automation&quot;</span>,{" "}
-                  <span className="text-[#00d4ff]">&quot;AI&quot;</span>],
+                  <span className="text-green">interests</span>: [
+                  <span className="text-accent">&quot;networking&quot;</span>,{" "}
+                  <span className="text-accent">&quot;automation&quot;</span>,{" "}
+                  <span className="text-accent">&quot;AI&quot;</span>],
                 </p>
                 <p>
-                  <span className="text-[#22c55e]">response_time</span>:{" "}
-                  <span className="text-[#22c55e]">&quot;usually within 24h&quot;</span>
+                  <span className="text-green">response_time</span>:{" "}
+                  <span className="text-green">&quot;usually within 24h&quot;</span>
                 </p>
               </div>
             </div>
@@ -141,47 +140,47 @@ export default function Contact() {
               }}
             >
               <div>
-                <label className="block text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)] mb-2">
+                <label className="block text-xs text-muted font-[family-name:var(--font-geist-mono)] mb-2">
                   name
                 </label>
                 <input
                   name="name"
                   type="text"
                   placeholder="Your name"
-                  className="w-full px-4 py-3 bg-[#111827] border border-[#1f2937] rounded-lg text-[#ededed] text-sm placeholder:text-[#6b7280]/50 focus:outline-none focus:border-[#00d4ff]/50 transition-colors"
+                  className="w-full px-4 py-3 bg-input-bg border border-input-border rounded-lg text-foreground text-sm placeholder:text-muted/50 focus:outline-none focus:border-accent/50 transition-colors min-h-[44px]"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)] mb-2">
+                <label className="block text-xs text-muted font-[family-name:var(--font-geist-mono)] mb-2">
                   email
                 </label>
                 <input
                   name="email"
                   type="email"
                   placeholder="your@email.com"
-                  className="w-full px-4 py-3 bg-[#111827] border border-[#1f2937] rounded-lg text-[#ededed] text-sm placeholder:text-[#6b7280]/50 focus:outline-none focus:border-[#00d4ff]/50 transition-colors"
+                  className="w-full px-4 py-3 bg-input-bg border border-input-border rounded-lg text-foreground text-sm placeholder:text-muted/50 focus:outline-none focus:border-accent/50 transition-colors min-h-[44px]"
                   required
                 />
                 {emailError && (
-                  <p className="mt-1 text-xs text-[#ef4444]">{emailError}</p>
+                  <p className="mt-1 text-xs text-red-500">{emailError}</p>
                 )}
               </div>
               <div>
-                <label className="block text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)] mb-2">
+                <label className="block text-xs text-muted font-[family-name:var(--font-geist-mono)] mb-2">
                   message
                 </label>
                 <textarea
                   name="message"
                   rows={5}
                   placeholder="Your message..."
-                  className="w-full px-4 py-3 bg-[#111827] border border-[#1f2937] rounded-lg text-[#ededed] text-sm placeholder:text-[#6b7280]/50 focus:outline-none focus:border-[#00d4ff]/50 transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-input-bg border border-input-border rounded-lg text-foreground text-sm placeholder:text-muted/50 focus:outline-none focus:border-accent/50 transition-colors resize-none min-h-[44px]"
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-[#00d4ff] text-[#0a0a0a] rounded-lg font-semibold text-sm hover:bg-[#00d4ff]/90 transition-all hover:shadow-[0_0_20px_#00d4ff33] flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 bg-accent text-background rounded-lg font-semibold text-sm hover:opacity-90 transition-all hover:shadow-[0_0_20px_#00d4ff33] flex items-center justify-center gap-2 min-h-[44px]"
               >
                 <Send className="w-4 h-4" />
                 Send Message

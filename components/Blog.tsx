@@ -44,48 +44,48 @@ export default function Blog() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="blog" className="py-24 px-6 relative" ref={ref}>
+    <section id="blog" className="py-16 sm:py-24 px-4 sm:px-6 relative" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center gap-3 mb-12">
-            <span className="font-[family-name:var(--font-geist-mono)] text-[#22c55e] text-sm">
+          <div className="flex items-center gap-3 mb-10 sm:mb-12">
+            <span className="font-[family-name:var(--font-geist-mono)] text-green text-sm">
               05.
             </span>
-            <h2 className="text-3xl font-bold text-[#ededed]">Blog</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-[#22c55e]/30 to-transparent" />
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Blog</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-green/30 to-transparent" />
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
           {posts.map((post, index) => (
             <motion.article
               key={post.title}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-              className="bg-[#111827] rounded-lg border border-[#1f2937] p-6 hover:border-opacity-50 transition-all group cursor-pointer"
+              className="bg-surface rounded-lg border border-card-border p-5 sm:p-6 hover:border-opacity-50 transition-all group cursor-pointer"
               style={{ borderColor: `${post.color}15` }}
             >
-              <div className="flex items-center gap-2 mb-4">
-                <Calendar className="w-4 h-4 text-[#6b7280]" />
-                <span className="text-xs text-[#6b7280] font-[family-name:var(--font-geist-mono)]">
+              <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                <Calendar className="w-4 h-4 text-muted" />
+                <span className="text-xs text-muted font-[family-name:var(--font-geist-mono)]">
                   {post.date}
                 </span>
               </div>
 
-              <h3 className="text-lg font-bold text-[#ededed] mb-3 group-hover:text-[#00d4ff] transition-colors">
+              <h3 className="text-base sm:text-lg font-bold text-foreground mb-2 sm:mb-3 group-hover:text-accent transition-colors">
                 {post.title}
               </h3>
 
-              <p className="text-sm text-[#6b7280] leading-relaxed mb-4">
+              <p className="text-xs sm:text-sm text-muted leading-relaxed mb-3 sm:mb-4">
                 {post.excerpt}
               </p>
 
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
