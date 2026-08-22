@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://srinivas-portfolio-automation-7157.vercel.app/sitemap.xml
