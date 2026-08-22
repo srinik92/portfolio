@@ -98,8 +98,12 @@ export default function Contact() {
               className="space-y-4"
               onSubmit={(e) => {
                 e.preventDefault();
-                window.location.href =
-                  "mailto:srinivas.k@example.com?subject=Portfolio Contact";
+                const form = e.target as HTMLFormElement;
+                const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+                const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+                const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+                const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}`;
+                window.location.href = `mailto:itsrinivasbsc@gmail.com?subject=Portfolio Contact&body=${body}`;
               }}
             >
               <div>
@@ -107,9 +111,11 @@ export default function Contact() {
                   name
                 </label>
                 <input
+                  name="name"
                   type="text"
                   placeholder="Your name"
                   className="w-full px-4 py-3 bg-[#111827] border border-[#1f2937] rounded-lg text-[#ededed] text-sm placeholder:text-[#6b7280]/50 focus:outline-none focus:border-[#00d4ff]/50 transition-colors"
+                  required
                 />
               </div>
               <div>
@@ -117,9 +123,11 @@ export default function Contact() {
                   email
                 </label>
                 <input
+                  name="email"
                   type="email"
                   placeholder="your@email.com"
                   className="w-full px-4 py-3 bg-[#111827] border border-[#1f2937] rounded-lg text-[#ededed] text-sm placeholder:text-[#6b7280]/50 focus:outline-none focus:border-[#00d4ff]/50 transition-colors"
+                  required
                 />
               </div>
               <div>
@@ -127,9 +135,11 @@ export default function Contact() {
                   message
                 </label>
                 <textarea
+                  name="message"
                   rows={5}
                   placeholder="Your message..."
                   className="w-full px-4 py-3 bg-[#111827] border border-[#1f2937] rounded-lg text-[#ededed] text-sm placeholder:text-[#6b7280]/50 focus:outline-none focus:border-[#00d4ff]/50 transition-colors resize-none"
+                  required
                 />
               </div>
               <button
