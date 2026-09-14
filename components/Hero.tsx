@@ -103,7 +103,7 @@ export default function Hero() {
 
         <div className="text-lg sm:text-xl md:text-2xl text-muted mb-4 font-[family-name:var(--font-geist-mono)]">
           <span className="text-green">&gt;</span>{" "}
-          Senior Network Automation & Observability Engineer
+          Network Automation & Observability
         </div>
 
         <div className="text-base sm:text-lg md:text-xl text-accent h-8 font-[family-name:var(--font-geist-mono)]">
