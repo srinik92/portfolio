@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { ExternalLink, MapPin, Send } from "lucide-react";
 
 const allowedDomains = [
@@ -31,20 +31,19 @@ function isAllowedEmail(email: string): boolean {
 }
 
 export default function Contact() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [emailError, setEmailError] = useState("");
 
   return (
-    <section id="contact" className="py-16 sm:py-24 relative" ref={ref}>
+    <section id="contact" className="py-16 sm:py-24 relative">
       {/* Section watermark */}
       <div className="section-watermark" aria-hidden="true">07</div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <div className="mb-10 sm:mb-12">
             <span className="eyebrow block mb-2">07 — Contact</span>
@@ -56,9 +55,10 @@ export default function Contact() {
 
         <div className="grid md:grid-cols-2 gap-12">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             className="space-y-6"
           >
             <p className="text-muted leading-relaxed text-sm sm:text-base">
@@ -87,13 +87,13 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           >
             <form
               className="space-y-4"
