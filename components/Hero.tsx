@@ -93,9 +93,13 @@ export default function Hero() {
           $ whoami
         </motion.div>
 
-        <h1 className="text-5xl sm:text-6xl md:text-8xl font-black mb-6 tracking-tight leading-[0.9]">
+        <h1 className="text-5xl sm:text-6xl md:text-8xl font-black mb-4 tracking-tight leading-[0.9]">
           <span className="text-foreground">Srinivas K</span>
         </h1>
+
+        <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          Senior Software Engineer
+        </p>
 
         <div className="text-lg sm:text-xl md:text-2xl text-muted mb-4 font-[family-name:var(--font-geist-mono)]">
           <span className="text-green">&gt;</span>{" "}

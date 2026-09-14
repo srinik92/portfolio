@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Srinivas K | Senior Network Automation & Observability Engineer",
+  title: "Srinivas K | Senior Software Engineer",
   description:
     "Portfolio of Srinivas K — Senior Network Automation & Observability Engineer specializing in Python, Grafana, Prometheus, VictoriaMetrics, Telegraf, Kubernetes, APIs, AIOps, AI Agents, and MCP. Creator of Argus open-source network monitoring solution.",
   keywords: [
