@@ -1,6 +1,6 @@
 "use client";
 
-import { Terminal, ExternalLink, Heart, ArrowUp } from "lucide-react";
+import { Terminal, ExternalLink, ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const links = [
@@ -8,6 +8,7 @@ const links = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
+  { label: "Education", href: "#education" },
   { label: "Blog", href: "#blog" },
   { label: "Contact", href: "#contact" },
 ];
@@ -23,7 +24,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="py-8 sm:py-12 px-4 sm:px-6 border-t border-card-border">
+      <footer className="py-8 sm:py-12 px-6 border-t border-card-border">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
             <div className="flex items-center gap-2">
@@ -59,9 +60,7 @@ export default function Footer() {
 
           <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-card-border text-center">
             <p className="text-xs text-muted font-[family-name:var(--font-geist-mono)]">
-              <span className="text-green">Built</span> with{" "}
-              <Heart className="w-3 h-3 inline text-red-500" /> by{" "}
-              <span className="text-foreground">Srinivas K</span> | © {new Date().getFullYear()}
+              <span className="text-foreground">Srinivas K</span> — Senior Network Automation & Observability Engineer | © {new Date().getFullYear()}
             </p>
           </div>
         </div>
@@ -70,7 +69,7 @@ export default function Footer() {
       {showScrollTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-surface border border-card-border shadow-lg flex items-center justify-center text-muted hover:text-accent hover:border-accent/30 transition-all"
+          className="fixed bottom-6 right-6 z-50 w-11 h-11 bg-surface border border-card-border shadow-lg flex items-center justify-center text-muted hover:text-accent hover:border-accent/30 transition-all"
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-5 h-5" />

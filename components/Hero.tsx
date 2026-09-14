@@ -2,14 +2,15 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import { useTheme } from "./ThemeProvider";
+import { ExternalLink, ArrowDown } from "lucide-react";
 
 const titles = [
   "Network Automation",
   "Observability Engineering",
   "DevOps & CI/CD",
   "AI in Networking",
+  "Python & APIs",
+  "Kubernetes & ArgoCD",
 ];
 
 export default function Hero() {
@@ -19,7 +20,6 @@ export default function Hero() {
     isDeleting: false,
   });
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { theme } = useTheme();
 
   useEffect(() => {
     const currentTitle = titles[displayState.titleIndex];
@@ -55,43 +55,51 @@ export default function Hero() {
     };
   }, [displayState]);
 
-  const glowColor = theme === "dark" ? "#00d4ff08" : "#00d4ff12";
-  const blobColor = theme === "dark" ? "#22c55e08" : "#22c55e10";
-  const blobColor2 = theme === "dark" ? "#00d4ff08" : "#00d4ff10";
-
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4 sm:px-6">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw))] pointer-events-none" style={{ background: `radial-gradient(ellipse at center, ${glowColor} 0%, transparent 70%)` }} />
-      <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl pointer-events-none" style={{ background: blobColor }} />
-      <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl pointer-events-none" style={{ background: blobColor2 }} />
+    <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-6">
+      {/* Dot grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.12]"
+        style={{
+          backgroundImage: `radial-gradient(circle, currentColor 1px, transparent 1px)`,
+          backgroundSize: `24px 24px`,
+        }}
+      />
+
+      {/* Corner cross-tick marks */}
+      <div className="absolute top-8 left-8 w-6 h-6 border-l-2 border-t-2 border-muted/30 hidden md:block" />
+      <div className="absolute top-8 right-8 w-6 h-6 border-r-2 border-t-2 border-muted/30 hidden md:block" />
+      <div className="absolute bottom-8 left-8 w-6 h-6 border-l-2 border-b-2 border-muted/30 hidden md:block" />
+      <div className="absolute bottom-8 right-8 w-6 h-6 border-r-2 border-b-2 border-muted/30 hidden md:block" />
+
+      {/* Large watermark initials */}
+      <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 text-[20vw] font-black text-foreground/[0.03] pointer-events-none select-none hidden lg:block">
+        SK
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center relative z-10 max-w-2xl"
+        className="text-center relative z-10 max-w-3xl"
       >
+        {/* Eyebrow label */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="inline-block mb-6 px-4 py-2 rounded-full border border-green/30 bg-green/5"
+          className="eyebrow mb-6"
         >
-          <span className="text-green text-sm font-[family-name:var(--font-geist-mono)]">
-            $ whoami
-          </span>
+          $ whoami
         </motion.div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 tracking-tight">
-          <span className="text-foreground">Srinivas </span>
-          <span className="gradient-text">K</span>
+        <h1 className="text-5xl sm:text-6xl md:text-8xl font-black mb-6 tracking-tight leading-[0.9]">
+          <span className="text-foreground">Srinivas K</span>
         </h1>
 
-        <div className="text-lg sm:text-xl md:text-2xl text-muted mb-3">
-          <span className="font-[family-name:var(--font-geist-mono)] text-green">
-            &gt;
-          </span>{" "}
-          Sr. Software Engineer
+        <div className="text-lg sm:text-xl md:text-2xl text-muted mb-4 font-[family-name:var(--font-geist-mono)]">
+          <span className="text-green">&gt;</span>{" "}
+          Senior Network Automation & Observability Engineer
         </div>
 
         <div className="text-base sm:text-lg md:text-xl text-accent h-8 font-[family-name:var(--font-geist-mono)]">
@@ -105,25 +113,25 @@ export default function Hero() {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="mt-8 max-w-xl mx-auto text-muted leading-relaxed text-sm sm:text-base"
         >
-          Building the future of network observability and automation.
-          12+ years of crafting monitoring solutions that keep enterprises running.
+          Building scalable network automation and observability solutions.
+          11+ years of engineering enterprise monitoring and automation platforms.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+          className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
           <a
             href="#projects"
-            className="px-5 sm:px-6 py-2.5 sm:py-3 bg-accent text-background rounded-lg font-semibold text-sm hover:opacity-90 transition-all hover:shadow-[0_0_20px_#00d4ff33] min-h-[44px] flex items-center"
+            className="btn-fill px-8 py-3 bg-accent text-background rounded-none font-semibold text-sm hover:text-background transition-all min-h-[44px] flex items-center"
           >
             View My Work
           </a>
           <a
             href="#contact"
-            className="px-5 sm:px-6 py-2.5 sm:py-3 border border-green/30 text-green rounded-lg font-semibold text-sm hover:bg-green/10 transition-all min-h-[44px] flex items-center"
+            className="btn-fill px-8 py-3 border border-muted/30 text-muted rounded-none font-semibold text-sm hover:text-background transition-all min-h-[44px] flex items-center"
           >
             Get In Touch
           </a>
@@ -131,7 +139,7 @@ export default function Hero() {
             href="https://linkedin.com/in/srinivas-k-77815496"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2.5 sm:p-3 border border-muted/30 text-muted rounded-lg hover:text-accent hover:border-accent/30 transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-3 border border-muted/30 text-muted rounded-none hover:text-accent hover:border-accent/30 transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <ExternalLink className="w-5 h-5" />
           </a>
@@ -143,17 +151,11 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-8 sm:bottom-10 text-muted hover:text-accent transition-colors"
+        className="absolute bottom-10 text-muted hover:text-accent transition-colors"
       >
         <div className="flex flex-col items-center gap-2">
-          <span className="text-xs font-[family-name:var(--font-geist-mono)]">scroll down</span>
-          <div className="w-5 h-8 border border-muted/30 rounded-full flex justify-center pt-1.5">
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1 h-1 bg-accent rounded-full"
-            />
-          </div>
+          <span className="text-xs font-[family-name:var(--font-geist-mono)] uppercase tracking-widest">Scroll</span>
+          <ArrowDown className="w-4 h-4 animate-bounce" />
         </div>
       </motion.a>
     </section>

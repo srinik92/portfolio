@@ -1,141 +1,173 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+
+const allSkills = [
+  "Python", "REST APIs", "SNMP", "Netmiko", "Grafana", "Prometheus",
+  "VictoriaMetrics", "Telegraf", "LogicMonitor", "Splunk", "Cisco",
+  "Aruba", "ACI", "ISE", "F5", "Infoblox", "SD-WAN", "Nautobot",
+  "Kubernetes", "Docker", "ArgoCD", "Git", "CI/CD", "AI Agents",
+  "MCP", "LLMs", "AIOps", "Generative AI", "Prompt Engineering",
+];
 
 const categories = [
   {
-    title: "Network Monitoring & Observability",
+    title: "Network Automation & APIs",
     color: "#00d4ff",
     skills: [
-      "Telegraf",
-      "VictoriaMetrics",
+      "Python",
+      "REST APIs",
+      "SNMP",
+      "Netmiko",
+      "Async/Concurrent Automation",
+      "Bash",
+      "SQL",
+    ],
+  },
+  {
+    title: "Observability & Monitoring",
+    color: "#22c55e",
+    skills: [
       "Grafana",
       "Prometheus",
+      "VictoriaMetrics",
+      "Telegraf",
       "LogicMonitor",
-      "CA Spectrum",
-      "CA eHealth",
-      "BMC TrueSight",
-      "SCOM",
       "Splunk",
       "SNMP",
       "API Monitoring",
     ],
   },
   {
-    title: "AI & Prompt Engineering",
-    color: "#3b82f6",
+    title: "Network Platforms",
+    color: "#a855f7",
     skills: [
-      "Python",
-      "Bash",
-      "Prompt Engineering",
-      "Claude Code",
-      "OpenCode",
-      "Codex",
-      "AI App Building",
-      "LLM Integration",
-      "REST APIs",
-      "SQL",
+      "Cisco",
+      "Aruba",
+      "Cisco ACI",
+      "Cisco ISE",
+      "F5",
+      "Infoblox",
+      "SD-WAN",
+      "uCPE",
+      "Nautobot",
+      "NetMRI",
     ],
   },
   {
-    title: "Automation & DevOps",
-    color: "#22c55e",
+    title: "Platform Engineering & DevOps",
+    color: "#f59e0b",
     skills: [
       "Kubernetes",
       "Docker",
-      "Terraform",
-      "Ansible",
-      "CI/CD Pipelines",
-      "Bitbucket",
-      "Infrastructure as Code",
-      "GitOps",
+      "ArgoCD",
+      "Git",
+      "CI/CD",
+      "Infrastructure Automation",
+      "Containers",
     ],
   },
   {
-    title: "AI & Machine Learning",
-    color: "#a855f7",
+    title: "AI-Assisted Engineering",
+    color: "#3b82f6",
     skills: [
-      "Generative AI",
+      "AI Agents",
+      "MCP",
+      "LLMs",
+      "Context-Driven Workflows",
       "AIOps",
-      "AI-Driven Analytics",
-      "Anomaly Detection",
-      "Predictive Monitoring",
-      "LLM Integration",
+      "Generative AI",
+      "Prompt Engineering",
+      "Claude Code",
+      "OpenCode",
     ],
   },
   {
-    title: "Platforms & Infrastructure",
-    color: "#f59e0b",
+    title: "Source of Truth & IT Ops",
+    color: "#ef4444",
     skills: [
-      "Linux",
-      "Windows Server",
-      "AWS",
-      "Networking",
-      "TCP/IP",
-      "DNS/DHCP",
-      "VLANs/VPN",
-      "Enterprise Monitoring",
+      "Nautobot",
+      "NetMRI",
+      "ITSM Integrations",
+      "LogicMonitor",
+      "Configuration Management",
+      "Device Discovery",
     ],
   },
 ];
 
 export default function Skills() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="skills" className="py-16 sm:py-24 px-4 sm:px-6 relative" ref={ref}>
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section id="skills" className="py-16 sm:py-24 relative overflow-hidden">
+      {/* Section watermark */}
+      <div className="section-watermark" aria-hidden="true">02</div>
+
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <div className="flex items-center gap-3 mb-10 sm:mb-12">
-            <span className="font-[family-name:var(--font-geist-mono)] text-green text-sm">
-              02.
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Skills</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-green/30 to-transparent" />
+          <div className="mb-10 sm:mb-12">
+            <span className="eyebrow block mb-2">02 — Skills</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight">
+              Skills
+            </h2>
           </div>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+        {/* Marquee ticker */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="mb-12 overflow-hidden border-y border-card-border py-4"
+        >
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[...allSkills, ...allSkills].map((skill, i) => (
+              <span
+                key={i}
+                className="mx-4 text-sm font-[family-name:var(--font-geist-mono)] text-muted/60"
+              >
+                {skill}
+                <span className="ml-4 text-accent/40">•</span>
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Category grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {categories.map((cat, catIndex) => (
             <motion.div
               key={cat.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + catIndex * 0.1 }}
-              className="bg-surface rounded-lg border border-card-border p-5 sm:p-6 hover:border-opacity-50 transition-all"
-              style={{ borderColor: `${cat.color}22` }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.5, delay: 0.1 + catIndex * 0.1, ease: "easeOut" }}
+              className="border border-card-border p-5 hover:border-accent/30 transition-all group"
             >
               <h3
-                className="text-sm font-bold font-[family-name:var(--font-geist-mono)] mb-4"
+                className="text-xs font-bold font-[family-name:var(--font-geist-mono)] uppercase tracking-wider mb-4"
                 style={{ color: cat.color }}
               >
                 {cat.title}
               </h3>
-              <div className="flex flex-wrap gap-2">
-                {cat.skills.map((skill, skillIndex) => (
-                  <motion.span
+              <div className="flex flex-wrap gap-1.5">
+                {cat.skills.map((skill) => (
+                  <span
                     key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{
-                      duration: 0.3,
-                      delay: 0.4 + catIndex * 0.1 + skillIndex * 0.03,
-                    }}
-                    className="px-3 py-1.5 rounded text-xs font-[family-name:var(--font-geist-mono)] transition-all cursor-default hover:scale-105"
+                    className="px-2 py-1 rounded-none text-xs font-[family-name:var(--font-geist-mono)] transition-all cursor-default hover:bg-accent/10"
                     style={{
-                      backgroundColor: `${cat.color}10`,
+                      backgroundColor: `${cat.color}08`,
                       color: cat.color,
-                      border: `1px solid ${cat.color}20`,
+                      border: `1px solid ${cat.color}15`,
                     }}
                   >
                     {skill}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
             </motion.div>
