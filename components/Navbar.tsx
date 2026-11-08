@@ -37,12 +37,7 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  const closeMenu = () => setIsOpen(false);
 
   const rail = (
     <nav
@@ -133,14 +128,7 @@ export default function Navbar() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsOpen(false);
-                        document.body.style.overflow = "";
-                        document
-                          .querySelector(link.href)
-                          ?.scrollIntoView({ behavior: "smooth" });
-                      }}
+                      onClick={closeMenu}
                       className="flex items-center gap-3 py-3 font-mono text-xs border-b border-border/50"
                     >
                       <span className="text-accent">{link.number}.</span>
