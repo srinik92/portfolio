@@ -10,13 +10,32 @@ export default function DebugConsole() {
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       setEnabled(new URLSearchParams(window.location.search).has("debug"));
-      setLines((prev) => ["ready: nav-fix-v5 @document", ...prev].slice(0, 30));
+      setLines((prev) => ["ready: nav-fix-v6 @document", ...prev].slice(0, 30));
     });
     const onScroll = () => {
       setLines((prev) => {
         const y = `scrollY=${Math.round(window.scrollY)}`;
         return prev[0] === y ? prev : [y, ...prev].slice(0, 30);
       });
+    };
+    const push = (line: string) =>
+      setLines((prev) => [line, ...prev].slice(0, 30));
+    const navFix = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement)?.closest?.("a[href^='#']");
+      if (!anchor) return;
+      const href = anchor.getAttribute("href") ?? "";
+      if (href === "#") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        push(`navFix(top) -> scrollTo (docST=${document.documentElement.scrollTop})`);
+        return;
+      }
+      const el = document.querySelector(href);
+      if (!el) return;
+      e.preventDefault();
+      window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 64), behavior: "smooth" });
+      push(`navFix(${href}) top=${Math.round(el.getBoundingClientRect().top + window.scrollY - 64)} (docST=${document.documentElement.scrollTop})`);
+      (document.querySelector("button[aria-label='Toggle menu']") as HTMLButtonElement | null)?.click();
     };
     const record = (type: string) => (e: Event) => {
       const t = e.target as HTMLElement;
@@ -40,20 +59,31 @@ export default function DebugConsole() {
     const onUnhandled = (e: PromiseRejectionEvent) => {
       setLines((prev) => [`✖REJECT ${String(e.reason).slice(0, 140)}`, ...prev].slice(0, 30));
     };
+    const poll = () => {
+      setLines((prev) => {
+        const line = `[poll] winScrollY=${Math.round(window.scrollY)} docH=${document.documentElement.scrollHeight} ivh=${window.innerHeight} docST=${document.documentElement.scrollTop}`;
+        return prev[0]?.startsWith("[poll]") ? [line, ...prev.slice(0, 29)] : [line, ...prev].slice(0, 30);
+      });
+    };
+    const pollId = setInterval(poll, 700);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("touchstart", record("touch"), { capture: true, passive: true });
     window.addEventListener("touchend", record("touchend"), { capture: true, passive: true });
     window.addEventListener("click", record("click"), { capture: true });
+    window.addEventListener("click", navFix, { capture: true });
     window.addEventListener("error", onError);
     window.addEventListener("unhandledrejection", onUnhandled);
+    poll();
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("touchstart", record("touch"), { capture: true } as EventListenerOptions);
       window.removeEventListener("touchend", record("touchend"), { capture: true } as EventListenerOptions);
       window.removeEventListener("click", record("click"), { capture: true });
+      window.removeEventListener("click", navFix, { capture: true });
       window.removeEventListener("error", onError);
       window.removeEventListener("unhandledrejection", onUnhandled);
+      clearInterval(pollId);
       cancelAnimationFrame(id);
     };
   }, []);
@@ -66,7 +96,7 @@ export default function DebugConsole() {
         onClick={() => setOpen((o) => !o)}
         className="bg-foreground text-background rounded-full px-3 py-2 text-xs font-bold shadow-lg"
       >
-        {open ? "✕" : "DBG·v5"}
+        {open ? "✕" : "DBG·v6"}
       </button>
       {open && (
         <div className="absolute bottom-12 left-0 w-[92vw] max-w-sm max-h-[50vh] overflow-y-auto bg-black/90 border border-accent rounded p-2 text-[11px] leading-5 text-white">
