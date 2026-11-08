@@ -10,6 +10,7 @@ export default function DebugConsole() {
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       setEnabled(new URLSearchParams(window.location.search).has("debug"));
+      setLines((prev) => ["ready: nav-fix-v5 @document", ...prev].slice(0, 30));
     });
     const onScroll = () => {
       setLines((prev) => {
@@ -65,7 +66,7 @@ export default function DebugConsole() {
         onClick={() => setOpen((o) => !o)}
         className="bg-foreground text-background rounded-full px-3 py-2 text-xs font-bold shadow-lg"
       >
-        {open ? "✕" : "DBG"}
+        {open ? "✕" : "DBG·v5"}
       </button>
       {open && (
         <div className="absolute bottom-12 left-0 w-[92vw] max-w-sm max-h-[50vh] overflow-y-auto bg-black/90 border border-accent rounded p-2 text-[11px] leading-5 text-white">
