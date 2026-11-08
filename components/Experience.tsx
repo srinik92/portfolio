@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Briefcase, ChevronRight } from "lucide-react";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import SectionHeading from "./SectionHeading";
 
 const experiences = [
   {
@@ -16,8 +17,6 @@ const experiences = [
       "Telegraf, VictoriaMetrics, LogicMonitor stack",
       "Recipient of Individual Excellence Award at Lowe's for 2025",
     ],
-    color: "#00d4ff",
-    current: true,
   },
   {
     period: "Dec 2019 — Sep 2026",
@@ -33,8 +32,6 @@ const experiences = [
       "Completed Generative AI Mastermind workshop from Outskill",
       "Collaborating with Command Centers, Application, and Infra teams on monitoring strategy",
     ],
-    color: "#22c55e",
-    current: false,
   },
   {
     period: "Oct 2017 — Dec 2019",
@@ -43,12 +40,10 @@ const experiences = [
     location: "Bengaluru, India",
     highlights: [
       "Tech lead in monitoring tools domain",
-      "Expertise in CA Vendor Tools profilio",
-      "Hands-on experience on CA Spectrum, eHealth, VNA, NFA and PM",
+      "Expertise in CA vendor tools profile",
+      "Hands-on experience with CA Spectrum, eHealth, VNA, NFA and PM",
       "Managed monitoring infrastructure across enterprise environments",
     ],
-    color: "#a855f7",
-    current: false,
   },
   {
     period: "May 2015 — Oct 2017",
@@ -56,12 +51,10 @@ const experiences = [
     role: "Senior Systems Engineer",
     location: "Bengaluru, India",
     highlights: [
-      "Expertise in CA monitoring tools — Spectrum, eHealth, BPPM(MOM)",
+      "Expertise in CA monitoring tools — Spectrum, eHealth, BPPM (MOM)",
       "Custom business transaction monitoring and alerting",
       "Collaborated with cross-functional teams on incident management",
     ],
-    color: "#f59e0b",
-    current: false,
   },
   {
     period: "Oct 2013 — Apr 2015",
@@ -73,91 +66,97 @@ const experiences = [
       "Implemented monitoring solutions across server and network environments",
       "Contributed to monitoring strategy and tool administration",
     ],
-    color: "#ef4444",
-    current: false,
   },
 ];
 
 export default function Experience() {
-  return (
-    <section id="experience" className="py-16 sm:py-24 relative">
-      {/* Section watermark */}
-      <div className="section-watermark" aria-hidden="true">04</div>
+  const [activeIndex, setActiveIndex] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const active = experiences[activeIndex];
 
-      <div className="max-w-6xl mx-auto px-6">
+  function onKeyDown(e: React.KeyboardEvent) {
+    let next: number | null = null;
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+      next = (activeIndex + 1) % experiences.length;
+    } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+      next = (activeIndex - 1 + experiences.length) % experiences.length;
+    }
+    if (next !== null) {
+      e.preventDefault();
+      setActiveIndex(next);
+      tabRefs.current[next]?.focus();
+    }
+  }
+
+  return (
+    <section id="experience" className="py-20 px-6 sm:px-12">
+      <div className="mx-auto max-w-3xl">
+        <SectionHeading number="02" title="Where I've Worked" />
+
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col md:flex-row gap-8"
         >
-          <div className="mb-10 sm:mb-12">
-            <span className="eyebrow block mb-2">04 — Experience</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight">
-              Experience
-            </h2>
+          <div
+            role="tablist"
+            aria-label="Work history"
+            onKeyDown={onKeyDown}
+            className="flex md:flex-col overflow-x-auto md:overflow-visible gap-1 whitespace-nowrap border-b md:border-b-0 md:border-l border-border"
+          >
+            {experiences.map((exp, i) => (
+              <button
+                key={`${exp.company}-${exp.role}`}
+                ref={(el) => {
+                  tabRefs.current[i] = el;
+                }}
+                role="tab"
+                id={`exp-tab-${i}`}
+                aria-selected={activeIndex === i}
+                aria-controls={`exp-panel-${i}`}
+                tabIndex={activeIndex === i ? 0 : -1}
+                onClick={() => setActiveIndex(i)}
+                className={`font-mono text-xs px-4 py-3 text-left transition-colors md:border-l-2 ${
+                  activeIndex === i
+                    ? "text-accent md:border-accent md:bg-accent-dim"
+                    : "text-muted hover:text-foreground md:border-border"
+                }`}
+              >
+                {exp.company}
+              </button>
+            ))}
           </div>
-        </motion.div>
 
-        <div className="border-t border-card-border">
-          {experiences.map((exp, index) => (
+          <AnimatePresence mode="wait">
             <motion.div
-              key={`${exp.company}-${exp.role}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.5, delay: 0.05 + index * 0.08, ease: "easeOut" }}
-              className="border-b border-card-border py-6 group"
+              key={activeIndex}
+              role="tabpanel"
+              id={`exp-panel-${activeIndex}`}
+              aria-labelledby={`exp-tab-${activeIndex}`}
+              initial={{ opacity: 0, x: 8 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -8 }}
+              transition={{ duration: 0.25 }}
             >
-              <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                <div className="flex items-center gap-3 sm:w-48 flex-shrink-0">
-                  <Briefcase
-                    className="w-4 h-4"
-                    style={{ color: exp.color }}
-                  />
-                  <span
-                    className="text-xs font-[family-name:var(--font-geist-mono)]"
-                    style={{ color: exp.color }}
-                  >
-                    {exp.period}
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold text-foreground">
-                        {exp.company}
-                      </h3>
-                      <p className="text-sm text-muted">{exp.role}</p>
-                      <p className="text-xs text-muted font-[family-name:var(--font-geist-mono)] mt-1">
-                        {exp.location}
-                      </p>
-                    </div>
-                    {exp.current && (
-                      <span className="px-2 py-0.5 rounded-none text-xs bg-green/10 text-green border border-green/20 flex-shrink-0">
-                        Current
-                      </span>
-                    )}
-                  </div>
-                  <ul className="mt-3 space-y-1.5">
-                    {exp.highlights.map((highlight, hi) => (
-                      <li
-                        key={hi}
-                        className="flex items-start gap-2 text-xs sm:text-sm text-muted"
-                      >
-                        <ChevronRight
-                          className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
-                          style={{ color: exp.color }}
-                        />
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <h3 className="text-lg font-medium text-foreground">
+                {active.role} <span className="text-accent">@ {active.company}</span>
+              </h3>
+              <p className="font-mono text-xs mt-1 mb-5">{active.period}</p>
+              <ul className="space-y-2.5">
+                {active.highlights.map((highlight) => (
+                  <li key={highlight} className="flex gap-3 text-sm leading-relaxed">
+                    <span className="text-accent mt-0.5" aria-hidden="true">
+                      ▹
+                    </span>
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
             </motion.div>
-          ))}
-        </div>
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

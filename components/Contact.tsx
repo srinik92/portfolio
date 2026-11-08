@@ -1,168 +1,121 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { ExternalLink, MapPin, Send } from "lucide-react";
-
-const allowedDomains = [
-  "gmail.com", "googlemail.com",
-  "outlook.com", "hotmail.com", "live.com", "msn.com",
-  "yahoo.com", "yahoo.co.in", "yahoo.co.uk",
-  "icloud.com", "me.com", "mac.com",
-  "protonmail.com", "proton.me",
-  "zoho.com", "zohomail.com",
-  "aol.com",
-  "rediffmail.com",
-  "fastmail.com",
-  "hey.com",
-  "tutanota.com", "tutamail.com",
-  "mail.com", "email.com",
-  "gmx.com", "gmx.de",
-  "yandex.com", "yandex.ru",
-  "mail.ru",
-  "windowslive.com",
-  "live.co.uk", "live.in",
-  "outlook.in", "hotmail.co.uk",
-];
-
-function isAllowedEmail(email: string): boolean {
-  const domain = email.split("@")[1]?.toLowerCase();
-  return allowedDomains.includes(domain);
-}
+import { MapPin, Mail, Send } from "lucide-react";
+import SectionHeading from "./SectionHeading";
 
 export default function Contact() {
-  const [emailError, setEmailError] = useState("");
-
   return (
-    <section id="contact" className="py-16 sm:py-24 relative">
-      {/* Section watermark */}
-      <div className="section-watermark" aria-hidden="true">07</div>
+    <section id="contact" className="py-20 px-6 sm:px-12">
+      <div className="mx-auto max-w-3xl">
+        <SectionHeading number="07" title="Get In Touch" />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-30px" }}
+          transition={{ duration: 0.5 }}
+          className="grid md:grid-cols-2 gap-12"
         >
-          <div className="mb-10 sm:mb-12">
-            <span className="eyebrow block mb-2">07 — Contact</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight">
-              Get In Touch
-            </h2>
-          </div>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-            className="space-y-6"
-          >
-            <p className="text-muted leading-relaxed text-sm sm:text-base">
+          <div className="space-y-5">
+            <p className="leading-relaxed">
               I&apos;m always open to discussing new projects, creative ideas, or
-              opportunities to be part of something amazing. Let&apos;s connect!
+              opportunities. Whether you want to talk network automation, observability,
+              or open source — my inbox is always open.
             </p>
 
-            <div className="border-t border-card-border">
+            <div className="border-t border-border">
               <a
-                href="https://linkedin.com/in/srinivas-k-77815496"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 py-4 border-b border-card-border text-muted hover:text-accent transition-colors group"
+                href="mailto:itsrinivasbsc@gmail.com"
+                className="flex items-center gap-4 py-4 border-b border-border"
               >
-                <ExternalLink className="w-4 h-4" />
+                <Mail className="w-4 h-4 text-accent" />
                 <div>
-                  <p className="text-xs font-[family-name:var(--font-geist-mono)]">LinkedIn</p>
-                  <p className="text-sm text-foreground">Srinivas K</p>
+                  <p className="font-mono text-xs text-muted">Email</p>
+                  <p className="text-sm text-foreground">itsrinivasbsc@gmail.com</p>
                 </div>
               </a>
-              <div className="flex items-center gap-4 py-4 border-b border-card-border text-muted">
-                <MapPin className="w-4 h-4" />
+              <div className="flex items-center gap-4 py-4 border-b border-border">
+                <MapPin className="w-4 h-4 text-accent" />
                 <div>
-                  <p className="text-xs font-[family-name:var(--font-geist-mono)]">Location</p>
+                  <p className="font-mono text-xs text-muted">Location</p>
                   <p className="text-sm text-foreground">Bengaluru, India</p>
                 </div>
               </div>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          >
-            <form
-              className="space-y-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const form = e.target as HTMLFormElement;
-                const name = (form.elements.namedItem("name") as HTMLInputElement).value;
-                const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-                const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
-
-                if (!isAllowedEmail(email)) {
-                  setEmailError("Please use a valid email (Gmail, Outlook, Yahoo, Apple, etc.)");
-                  return;
-                }
-                setEmailError("");
-
-                const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}`;
-                window.location.href = `mailto:itsrinivasbsc@gmail.com?subject=Portfolio Contact&body=${body}`;
-              }}
+            <a
+              href="https://linkedin.com/in/srinivas-k-77815496"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-all"
             >
-              <div>
-                <label className="block text-xs text-muted font-[family-name:var(--font-geist-mono)] uppercase tracking-wider mb-2">
-                  Name
-                </label>
-                <input
-                  name="name"
-                  type="text"
-                  placeholder="Your name"
-                  className="w-full px-4 py-3 bg-input-bg border border-input-border text-foreground text-sm placeholder:text-muted/50 focus:outline-none focus:border-accent/50 transition-colors min-h-[44px]"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-muted font-[family-name:var(--font-geist-mono)] uppercase tracking-wider mb-2">
-                  Email
-                </label>
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="your@email.com"
-                  className="w-full px-4 py-3 bg-input-bg border border-input-border text-foreground text-sm placeholder:text-muted/50 focus:outline-none focus:border-accent/50 transition-colors min-h-[44px]"
-                  required
-                />
-                {emailError && (
-                  <p className="mt-1 text-xs text-red-500">{emailError}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-xs text-muted font-[family-name:var(--font-geist-mono)] uppercase tracking-wider mb-2">
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  rows={5}
-                  placeholder="Your message..."
-                  className="w-full px-4 py-3 bg-input-bg border border-input-border text-foreground text-sm placeholder:text-muted/50 focus:outline-none focus:border-accent/50 transition-colors resize-none min-h-[44px]"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="btn-fill w-full px-6 py-3 bg-accent text-background font-semibold text-sm hover:text-background transition-all flex items-center justify-center gap-2 min-h-[44px]"
-              >
-                <Send className="w-4 h-4" />
-                Send Message
-              </button>
-            </form>
-          </motion.div>
-        </div>
+              Connect with me on LinkedIn
+            </a>
+          </div>
+
+          <form
+            className="space-y-5"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const form = e.target as HTMLFormElement;
+              const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+              const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+              const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+              const body = `Name: ${name}\r\nEmail: ${email}\r\nMessage: ${message}`;
+              window.location.href = `mailto:itsrinivasbsc@gmail.com?subject=${encodeURIComponent(
+                "Portfolio Contact"
+              )}&body=${encodeURIComponent(body)}`;
+            }}
+          >
+            <div>
+              <label htmlFor="contact-name" className="block font-mono text-xs text-muted mb-2">
+                Name
+              </label>
+              <input
+                id="contact-name"
+                name="name"
+                type="text"
+                placeholder="Your name"
+                className="w-full px-4 py-3 bg-input-bg border border-input-border rounded text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:border-accent transition-colors"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="contact-email" className="block font-mono text-xs text-muted mb-2">
+                Email
+              </label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                placeholder="your@email.com"
+                className="w-full px-4 py-3 bg-input-bg border border-input-border rounded text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:border-accent transition-colors"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="contact-message" className="block font-mono text-xs text-muted mb-2">
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows={5}
+                placeholder="Your message..."
+                className="w-full px-4 py-3 bg-input-bg border border-input-border rounded text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:border-accent transition-colors resize-none"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="inline-flex items-center gap-2 px-7 py-3.5 border border-accent text-accent rounded font-medium transition-colors hover:bg-accent-dim"
+            >
+              <Send className="w-4 h-4" />
+              Send Message
+            </button>
+          </form>
+        </motion.div>
       </div>
     </section>
   );

@@ -2,61 +2,49 @@
 
 @theme inline {
   --color-background: var(--bg);
-  --color-foreground: var(--fg);
-  --color-accent: #00d4ff;
-  --color-accent-dim: #00d4ff33;
+  --color-foreground: var(--heading);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
   --color-surface: var(--surface);
   --color-surface-light: var(--surface-light);
   --color-muted: var(--muted);
-  --color-green: #22c55e;
-  --color-green-dim: #22c55e33;
-  --color-purple: #a855f7;
-  --color-purple-dim: #a855f733;
+  --color-border: var(--border);
+  --color-input-bg: var(--input-bg);
+  --color-input-border: var(--input-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 html.dark {
-  --bg: #0c0b0a;
-  --fg: #ededed;
-  --surface: #141413;
-  --surface-light: #1f1f1e;
-  --muted: #6b7280;
-  --card-bg: #141413;
-  --card-border: #1f1f1e;
-  --input-bg: #141413;
-  --input-border: #1f1f1e;
-  --nav-bg: #0c0b0a;
-  --section-alt: transparent;
+  --bg: #0a192f;
+  --heading: #ccd6f6;
+  --fg: #8892b0;
+  --surface: #112240;
+  --surface-light: #233554;
+  --muted: #8892b0;
+  --border: #233554;
+  --input-bg: #112240;
+  --input-border: #233554;
+  --accent: #64ffda;
+  --accent-dim: #64ffda1a;
 }
 
 html.light {
-  --bg: #f4f1ea;
-  --fg: #111827;
+  --bg: #f6f8fc;
+  --heading: #243b53;
+  --fg: #55688a;
   --surface: #ffffff;
-  --surface-light: #e5e7eb;
-  --muted: #6b7280;
-  --card-bg: #ffffff;
-  --card-border: #e5e7eb;
-  --input-bg: #f3f4f6;
-  --input-border: #d1d5db;
-  --nav-bg: #f4f1ea;
-  --section-alt: #f9fafb;
+  --surface-light: #e9eef7;
+  --muted: #55688a;
+  --border: #dce4f2;
+  --input-bg: #ffffff;
+  --input-border: #d5deee;
+  --accent: #0e7d63;
+  --accent-dim: #0e7d6314;
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }
 
 body {
@@ -67,12 +55,12 @@ body {
 }
 
 ::selection {
-  background: #00d4ff;
-  color: #0c0b0a;
+  background: var(--accent);
+  color: var(--bg);
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -81,122 +69,9 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--surface-light);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted);
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes fill-up {
-  0% { transform: translateY(100%); }
-  100% { transform: translateY(0); }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 6s ease infinite;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #00d4ff, #22c55e);
-  background-size: 200% 200%;
-  animation: gradient-shift 6s ease infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.animate-marquee {
-  animation: marquee 30s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation: none;
-  }
-  .gradient-text {
-    animation: none;
-  }
-}
-
-/* Editorial section watermark */
-.section-watermark {
-  position: absolute;
-  top: 50%;
-  left: -5%;
-  transform: translateY(-50%);
-  font-size: clamp(6rem, 15vw, 12rem);
-  font-weight: 900;
-  font-family: var(--font-mono);
-  color: var(--fg);
-  opacity: 0.03;
-  pointer-events: none;
-  user-select: none;
-  line-height: 1;
-}
-
-/* Invert-fill button effect */
-.btn-fill {
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.btn-fill::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 0%;
-  background: currentColor;
-  transition: height 0.3s ease;
-  z-index: -1;
-}
-
-.btn-fill:hover::before {
-  height: 100%;
-}
-
-/* Accent bar for list items */
-.accent-bar {
-  position: relative;
-  padding-left: 1rem;
-}
-
-.accent-bar::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--accent);
-  transform: scaleY(0);
-  transition: transform 0.2s ease;
-}
-
-.accent-bar:hover::before {
-  transform: scaleY(1);
-}
-
-/* Mono eyebrow label */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
 }
