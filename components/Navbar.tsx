@@ -42,7 +42,9 @@ export default function Navbar() {
   // depend on anchor defaults at all. window.scrollTo({behavior:"smooth"}) is
   // additionally a silent no-op on some Android browsers, while direct
   // scrollingElement.scrollTop assignment works and is still smooth-animated
-  // by the global scroll-behavior:smooth rule.
+  // by the global scroll-behavior:smooth rule — but only when issued after
+  // the initiating touch gesture finished, so the assignment is deferred
+  // ~100ms (timing verified on-device).
   //
   // The listener is attached natively on document in the capture phase
   // instead of React's delegated onClick, which those browsers never reach
@@ -56,15 +58,16 @@ export default function Navbar() {
       setIsOpen(false);
       const href = anchor.getAttribute("href");
       if (!href) return;
+      window.__navdbg?.push(`nav-handler ran: ${href}`);
       window.history.replaceState(null, "", href === "#" ? window.location.pathname : href);
-      if (href === "#") {
-        (document.scrollingElement ?? document.documentElement).scrollTop = 0;
-        return;
-      }
-      const el = document.querySelector(href);
-      if (!el) return;
-      const y = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 64);
-      (document.scrollingElement ?? document.documentElement).scrollTop = y;
+      const y =
+        href === "#"
+          ? 0
+          : Math.max(0, document.querySelector(href)!.getBoundingClientRect().top + window.scrollY - 64);
+      setTimeout(() => {
+        (document.scrollingElement ?? document.documentElement).scrollTop = y;
+        window.__navdbg?.push(`scroll done: docST=${Math.round(document.scrollingElement?.scrollTop ?? -1)} wanted ${y}`);
+      }, 100);
     };
     document.addEventListener("click", onClick, { capture: true });
     return () => document.removeEventListener("click", onClick, { capture: true });
