@@ -52,29 +52,31 @@ export default function DebugPage() {
 
   return (
     <main className="min-h-[300svh] p-6 font-mono text-sm">
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          className="overflow-hidden border border-accent bg-surface"
-          style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50 }}
-        >
-          <ul className="p-4">
-            {links.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={(e) => scrollToSection(e, link.href)}
-                  className="block py-3 text-accent border-b border-border"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden border border-accent bg-surface"
+            style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50 }}
+          >
+            <ul className="p-4">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={(e) => scrollToSection(e, link.href)}
+                    className="block py-3 text-accent border-b border-border"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <button
         onClick={() => setOpen((o) => !o)}
         style={{ position: "fixed", top: 0, right: 0, zIndex: 60 }}
