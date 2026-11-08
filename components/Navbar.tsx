@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 const navLinks = [
@@ -46,12 +46,12 @@ export default function Navbar() {
 
   const rail = (
     <nav
-      className="hidden lg:flex fixed inset-y-0 left-0 w-[240px] flex-col justify-between py-8 px-10 z-40"
+      className="hidden lg:flex fixed inset-y-0 left-0 w-[240px] flex-col py-8 px-10 z-40"
       aria-label="Primary"
     >
       <a
         href="#"
-        className="font-mono text-2xl text-accent font-medium w-fit"
+        className="font-mono text-2xl text-accent font-medium w-fit mb-14"
         aria-label="Srinivas K — home"
       >
         S<span className="text-foreground">.</span>
@@ -80,30 +80,19 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-
-      <div className="flex items-center gap-4">
-        <a
-          href="https://linkedin.com/in/srinivas-k-77815496"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn profile"
-          className="font-mono text-xs text-muted hover:text-accent transition-colors"
-        >
-          linkedin
-        </a>
-        <button
-          onClick={toggle}
-          className="font-mono text-xs text-muted hover:text-accent border border-border rounded px-3 py-1.5 transition-colors"
-          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-        >
-          {theme === "dark" ? "light" : "dark"}
-        </button>
-      </div>
     </nav>
   );
 
   return (
     <>
+      <button
+        onClick={toggle}
+        className="hidden lg:flex fixed top-7 right-8 z-40 w-9 h-9 border border-border rounded bg-surface/60 items-center justify-center text-muted hover:text-accent hover:border-accent/40 transition-all"
+        aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+      >
+        {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      </button>
+
       <nav
         className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-background/90 backdrop-blur border-b border-border"
         aria-label="Primary"
@@ -144,7 +133,14 @@ export default function Navbar() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsOpen(false);
+                        document.body.style.overflow = "";
+                        document
+                          .querySelector(link.href)
+                          ?.scrollIntoView({ behavior: "smooth" });
+                      }}
                       className="flex items-center gap-3 py-3 font-mono text-xs border-b border-border/50"
                     >
                       <span className="text-accent">{link.number}.</span>

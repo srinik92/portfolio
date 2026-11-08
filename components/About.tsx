@@ -54,8 +54,9 @@ export default function About() {
           </p>
           <p>
             My current focus is Python-based network automation and API integrations
-            across Cisco, Aruba, F5, Infoblox, Cisco ISE, ACI, and SD-WAN/uCPE platforms,
-            along with AI-assisted operations using agents, MCP, and LLMs.
+            across Cisco, Aruba, F5, Infoblox, Cisco ISE, ACI, and SD-WAN/uCPE platforms —
+            including a Nautobot network source of truth running automation jobs on
+            Kubernetes — along with AI-assisted operations using agents, MCP, and LLMs.
           </p>
         </div>
 

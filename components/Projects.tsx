@@ -22,6 +22,14 @@ const projects = [
       "Architect & builder. End-to-end telemetry pipeline for network performance monitoring — custom collectors gathering metrics via SNMP and APIs, stored in a high-performance time-series database with real-time dashboard visualization.",
   },
   {
+    title: "Nautobot SoT Platform",
+    subtitle: "Network Source of Truth on Kubernetes",
+    link: "",
+    tech: ["Nautobot", "Kubernetes", "Helm", "Docker", "GraphQL", "Python"],
+    description:
+      "Built and deployed a Nautobot-based network single source of truth platform on a Kubernetes cluster from scratch — custom Nautobot container images with app plugins, Helm-managed deployment with PostgreSQL and Redis, and Kubernetes Job manifests executing automation jobs against SoT data on demand.",
+  },
+  {
     title: "CI/CD Pipeline",
     subtitle: "Automated Monitoring Deployment",
     link: "",

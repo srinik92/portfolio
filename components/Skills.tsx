@@ -8,7 +8,10 @@ const categories = [
     title: "Network Automation & APIs",
     skills: [
       "Python",
+      "Nautobot Jobs",
       "REST APIs",
+      "GraphQL APIs",
+      "Nornir",
       "SNMP",
       "Netmiko",
       "Async/Concurrent Automation",
@@ -46,6 +49,8 @@ const categories = [
     title: "Platform Engineering & DevOps",
     skills: [
       "Kubernetes",
+      "Helm Charts",
+      "Kubernetes Job Manifests",
       "Docker",
       "ArgoCD",
       "Git",
@@ -68,9 +73,12 @@ const categories = [
     title: "Source of Truth & IT Ops",
     skills: [
       "Nautobot",
+      "SSoT Sync",
+      "Nautobot Apps/Plugins",
+      "Device Onboarding",
+      "Golden Config",
       "ITSM Integrations",
       "Configuration Management",
-      "Device Discovery",
     ],
   },
 ];

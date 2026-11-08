@@ -15,19 +15,20 @@ export default function Footer() {
   return (
     <>
       <footer className="py-8 px-6 sm:px-12 border-t border-border">
-        <div className="mx-auto max-w-3xl flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="mx-auto max-w-3xl flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
           <p className="font-mono text-xs">
-            Designed &amp; built by{" "}
-            <span className="text-accent">Srinivas K</span>
+            Designed &amp; built by <span className="text-accent">Srinivas K</span>
           </p>
-          <a
-            href="https://linkedin.com/in/srinivas-k-77815496"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-xs text-muted hover:text-accent transition-colors min-h-[44px] flex items-center"
-          >
-            LinkedIn
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://linkedin.com/in/srinivas-k-77815496"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs text-muted hover:text-accent transition-colors min-h-[44px] flex items-center"
+            >
+              LinkedIn
+            </a>
+          </div>
         </div>
       </footer>
 

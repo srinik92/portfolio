@@ -7,6 +7,7 @@ import {
   useCallback,
   useSyncExternalStore,
 } from "react";
+import { MotionConfig } from "framer-motion";
 
 type Theme = "dark" | "light";
 
@@ -67,7 +68,11 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
 
   return (
     <ThemeContext.Provider value={{ theme, toggle }}>
-      {children}
+      {/* Gate framer-motion animations on the OS reduced-motion preference;
+          CSS animations are covered separately in globals.css. */}
+      <MotionConfig reducedMotion="user">
+        {children}
+      </MotionConfig>
     </ThemeContext.Provider>
   );
 }
