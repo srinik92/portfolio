@@ -55,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
           {children}
+          <DebugConsole />
         </ThemeProvider>
       </body>
     </html>

@@ -98,8 +98,8 @@ export default function DebugConsole() {
           <button
             onClick={() => {
               void navigator.clipboard?.writeText(lines.join("\n")).then(
-                () => push("copied ✔"),
-                () => push("copy failed — long-press text instead")
+                () => setLines((prev) => ["copied ✔", ...prev].slice(0, 30)),
+                () => setLines((prev) => ["copy failed — long-press text instead", ...prev].slice(0, 30))
               );
             }}
             className="mb-1 border border-white/40 rounded px-2 py-1 text-[10px] uppercase"
