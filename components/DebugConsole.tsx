@@ -10,7 +10,7 @@ export default function DebugConsole() {
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       setEnabled(new URLSearchParams(window.location.search).has("debug"));
-      setLines((prev) => ["ready: nav-fix-v6 @document", ...prev].slice(0, 30));
+      setLines((prev) => ["ready: nav-fix-v7 ladder", ...prev].slice(0, 30));
     });
     const onScroll = () => {
       setLines((prev) => {
@@ -24,18 +24,32 @@ export default function DebugConsole() {
       const anchor = (e.target as HTMLElement)?.closest?.("a[href^='#']");
       if (!anchor) return;
       const href = anchor.getAttribute("href") ?? "";
-      if (href === "#") {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        push(`navFix(top) -> scrollTo (docST=${document.documentElement.scrollTop})`);
-        return;
-      }
-      const el = document.querySelector(href);
-      if (!el) return;
+      const el = href === "#" ? null : document.querySelector(href);
+      if (href !== "#" && !el) return;
       e.preventDefault();
-      window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 64), behavior: "smooth" });
-      push(`navFix(${href}) top=${Math.round(el.getBoundingClientRect().top + window.scrollY - 64)} (docST=${document.documentElement.scrollTop})`);
+      const target =
+        href === "#"
+          ? 0
+          : Math.max(0, el!.getBoundingClientRect().top + window.scrollY - 64);
+      const sc = document.scrollingElement ?? document.documentElement;
+      sc.scrollTop = target;
       (document.querySelector("button[aria-label='Toggle menu']") as HTMLButtonElement | null)?.click();
+      setTimeout(() => {
+        const st = Math.round(sc.scrollTop);
+        push(`ladderA scrollTop -> ${st} (wanted ${target})`);
+        if (Math.abs(st - target) < 5) return;
+        (el ?? document.body).scrollIntoView({ block: "start", behavior: "auto" });
+        setTimeout(() => {
+          const st2 = Math.round(sc.scrollTop);
+          push(`ladderB scrollIntoView -> ${st2} (wanted ${target})`);
+          if (Math.abs(st2 - target) < 5) return;
+          window.scrollTo({ top: target, behavior: "auto" });
+          setTimeout(() => {
+            const st3 = Math.round(sc.scrollTop);
+            push(`ladderC winScrollTo -> ${st3} (wanted ${target})`);
+          }, 120);
+        }, 120);
+      }, 120);
     };
     const record = (type: string) => (e: Event) => {
       const t = e.target as HTMLElement;
@@ -96,7 +110,7 @@ export default function DebugConsole() {
         onClick={() => setOpen((o) => !o)}
         className="bg-foreground text-background rounded-full px-3 py-2 text-xs font-bold shadow-lg"
       >
-        {open ? "✕" : "DBG·v6"}
+        {open ? "✕" : "DBG·v7"}
       </button>
       {open && (
         <div className="absolute bottom-12 left-0 w-[92vw] max-w-sm max-h-[50vh] overflow-y-auto bg-black/90 border border-accent rounded p-2 text-[11px] leading-5 text-white">
