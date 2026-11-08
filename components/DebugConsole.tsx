@@ -69,6 +69,17 @@ export default function DebugConsole() {
       </button>
       {open && (
         <div className="absolute bottom-12 left-0 w-[92vw] max-w-sm max-h-[50vh] overflow-y-auto bg-black/90 border border-accent rounded p-2 text-[11px] leading-5 text-white">
+          <button
+            onClick={() => {
+              void navigator.clipboard?.writeText(lines.join("\n")).then(
+                () => setLines((prev) => ["copied ✔", ...prev].slice(0, 30)),
+                () => setLines((prev) => ["copy failed — long-press text instead", ...prev].slice(0, 30))
+              );
+            }}
+            className="mb-1 border border-white/40 rounded px-2 py-1 text-[10px] uppercase"
+          >
+            Copy log
+          </button>
           {lines.length === 0 && <p>- no events logged -</p>}
           {lines.map((line, i) => (
             <div key={`${line}-${i}`} className="break-all border-b border-white/10 py-0.5">
