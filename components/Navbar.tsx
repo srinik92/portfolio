@@ -39,6 +39,23 @@ export default function Navbar() {
 
   const closeMenu = () => setIsOpen(false);
 
+  // Manual scrolling: some mobile browsers (e.g. Opera Android) fire the hash
+  // navigation but never perform the scroll, so don't depend on anchor
+  // defaults at all. replaceState keeps the URL shareable without triggering
+  // Next's router scroll management.
+  const scrollToSection = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    closeMenu();
+    const el = document.querySelector(href);
+    if (!el) {
+      history.replaceState(null, "", href);
+      return;
+    }
+    const y = el.getBoundingClientRect().top + window.scrollY - 64;
+    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+    history.replaceState(null, "", href);
+  };
+
   const rail = (
     <nav
       className="hidden lg:flex fixed inset-y-0 left-0 w-[240px] flex-col py-8 px-10 z-40"
@@ -57,6 +74,7 @@ export default function Navbar() {
           <li key={link.href}>
             <a
               href={link.href}
+              onClick={(e) => scrollToSection(e, link.href)}
               className={`group font-mono text-xs flex items-baseline gap-2 py-1.5 transition-colors ${
                 active === link.href ? "text-accent" : "text-muted hover:text-foreground"
               }`}
@@ -128,7 +146,7 @@ export default function Navbar() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      onClick={closeMenu}
+                      onClick={(e) => scrollToSection(e, link.href)}
                       className="flex items-center gap-3 py-3 font-mono text-xs border-b border-border/50"
                     >
                       <span className="text-accent">{link.number}.</span>
