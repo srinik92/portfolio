@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
@@ -19,6 +19,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState("");
   const { theme, toggle } = useTheme();
+  const railRef = useRef<HTMLElement>(null);
+  const mobileRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ids = navLinks.map((l) => l.href.slice(1));
@@ -37,27 +39,49 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  const closeMenu = () => setIsOpen(false);
-
   // Manual scrolling: some mobile browsers (e.g. Opera Android) fire the hash
   // navigation but never perform the scroll, so don't depend on anchor
   // defaults at all. replaceState keeps the URL shareable without triggering
   // Next's router scroll management.
-  const scrollToSection = (e: React.MouseEvent, href: string) => {
-    e.preventDefault();
-    closeMenu();
-    const el = document.querySelector(href);
-    if (!el) {
+  //
+  // The listener is attached natively in the capture phase instead of React's
+  // delegated onClick: on some Android browsers, clicks on the menu anchors
+  // never reach React's root-level listeners (verified via an on-page event
+  // log), so React onClick handlers were silently skipped. Capture-phase
+  // events do reach root-attached listeners on those devices.
+  useEffect(() => {
+    const scrollToHref = (href: string) => {
+      setIsOpen(false);
+      if (href === "#") {
+        history.replaceState(null, "", window.location.pathname);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      const el = document.querySelector(href);
+      if (!el) {
+        history.replaceState(null, "", href);
+        return;
+      }
+      const y = el.getBoundingClientRect().top + window.scrollY - 64;
+      window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
       history.replaceState(null, "", href);
-      return;
-    }
-    const y = el.getBoundingClientRect().top + window.scrollY - 64;
-    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-    history.replaceState(null, "", href);
-  };
+    };
+    const onClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement)?.closest?.("a");
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+      e.preventDefault();
+      scrollToHref(href);
+    };
+    const els = [railRef.current, mobileRef.current].filter(Boolean) as HTMLElement[];
+    els.forEach((el) => el.addEventListener("click", onClick, { capture: true }));
+    return () => els.forEach((el) => el.removeEventListener("click", onClick, { capture: true }));
+  }, []);
 
   const rail = (
     <nav
+      ref={railRef}
       className="hidden lg:flex fixed inset-y-0 left-0 w-[240px] flex-col py-8 px-10 z-40"
       aria-label="Primary"
     >
@@ -74,7 +98,6 @@ export default function Navbar() {
           <li key={link.href}>
             <a
               href={link.href}
-              onClick={(e) => scrollToSection(e, link.href)}
               className={`group font-mono text-xs flex items-baseline gap-2 py-1.5 transition-colors ${
                 active === link.href ? "text-accent" : "text-muted hover:text-foreground"
               }`}
@@ -107,6 +130,7 @@ export default function Navbar() {
       </button>
 
       <nav
+        ref={mobileRef}
         className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-background/90 backdrop-blur border-b border-border"
         aria-label="Primary"
       >
@@ -146,7 +170,6 @@ export default function Navbar() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      onClick={(e) => scrollToSection(e, link.href)}
                       className="flex items-center gap-3 py-3 font-mono text-xs border-b border-border/50"
                     >
                       <span className="text-accent">{link.number}.</span>
