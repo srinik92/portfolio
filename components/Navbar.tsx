@@ -58,7 +58,6 @@ export default function Navbar() {
       setIsOpen(false);
       const href = anchor.getAttribute("href");
       if (!href) return;
-      window.__navdbg?.push(`nav-handler ran: ${href}`);
       window.history.replaceState(null, "", href === "#" ? window.location.pathname : href);
       const y =
         href === "#"
@@ -66,7 +65,6 @@ export default function Navbar() {
           : Math.max(0, document.querySelector(href)!.getBoundingClientRect().top + window.scrollY - 64);
       setTimeout(() => {
         (document.scrollingElement ?? document.documentElement).scrollTop = y;
-        window.__navdbg?.push(`scroll done: docST=${Math.round(document.scrollingElement?.scrollTop ?? -1)} wanted ${y}`);
       }, 100);
     };
     document.addEventListener("click", onClick, { capture: true });
