@@ -37,17 +37,17 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Manual scrolling: some mobile browsers (e.g. Opera Android) fire the hash
-  // navigation but never perform the scroll, so don't depend on anchor
-  // defaults at all. replaceState keeps the URL shareable without triggering
-  // Next's router scroll management.
+  // Manual scrolling: some mobile browsers fire the hash navigation but never
+  // perform the scroll (verified on-device with event logging), so don't
+  // depend on anchor defaults at all. window.scrollTo({behavior:"smooth"}) is
+  // additionally a silent no-op on some Android browsers, while direct
+  // scrollingElement.scrollTop assignment works and is still smooth-animated
+  // by the global scroll-behavior:smooth rule.
   //
   // The listener is attached natively on document in the capture phase
-  // instead of React's delegated onClick, and instead of container-level
-  // node refs: on some Android browsers, anchor clicks inside the menu never
-  // reach React's root-level listeners and container refs can point at DOM
-  // nodes replaced after hydration. Element nodes may be swapped out, but
-  // document always sees every click (verified with on-page event logging).
+  // instead of React's delegated onClick, which those browsers never reach
+  // for menu anchor taps. replaceState keeps the URL shareable without
+  // triggering Next's router scroll management.
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement)?.closest?.("a[href^='#']");
@@ -56,19 +56,15 @@ export default function Navbar() {
       setIsOpen(false);
       const href = anchor.getAttribute("href");
       if (!href) return;
+      window.history.replaceState(null, "", href === "#" ? window.location.pathname : href);
       if (href === "#") {
-        history.replaceState(null, "", window.location.pathname);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        (document.scrollingElement ?? document.documentElement).scrollTop = 0;
         return;
       }
       const el = document.querySelector(href);
-      if (!el) {
-        history.replaceState(null, "", href);
-        return;
-      }
-      const y = el.getBoundingClientRect().top + window.scrollY - 64;
-      window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-      history.replaceState(null, "", href);
+      if (!el) return;
+      const y = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 64);
+      (document.scrollingElement ?? document.documentElement).scrollTop = y;
     };
     document.addEventListener("click", onClick, { capture: true });
     return () => document.removeEventListener("click", onClick, { capture: true });
